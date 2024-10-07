@@ -123,10 +123,14 @@ for ei in range(Nepochs):
     mse = loss(err)
     if ei % 100 == 0:
         print('\r' + str(ei) + '/' + str(Nepochs) + '\t Err:' + str(mse), end='')
-        line2.set_ydata(ua)
-        fig.canvas.draw()
+        fig = plt.figure(figsize=(12, 8))
+        ax = fig.add_subplot(111)
+        line1, = ax.plot(ustar, 'k')
+        line2, = ax.plot(ua, 'r')
+        plt.xlabel('Time', fontsize=18), plt.ylabel('Output', fontsize=18)
+        fig.legend({'Model', 'Target'}, loc='upper right', fontsize=18)
         plt.title('Epoch ' + str(ei) + '/' + str(Nepochs))
-        plt.pause(0.0001)
+        plt.show()
 
     # compute overlap and save
     learning['fbalignment'].append((wr.flatten() @ B.flatten('F')) /
